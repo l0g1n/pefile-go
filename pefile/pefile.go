@@ -14,7 +14,9 @@ func main() {
 	//	os.Exit(-1)
 	//}
 	//filename := args[0]
-	filename := "D:\\H\\mae2.0_module\\bugs\\aaaa.exe"
+	//filename := "D:\\H\\mae2.0_module\\测试程序\\calc32.exe"
+	//filename := "D:\\H\\mae2.0_module\\bugs\\actxprxy.dll"
+	filename := "D:\\H\\mae2.0_module\\bugs\\zipfldr.dll"
 	pefile, err := pefile.NewPEFile(filename)
 	if err != nil {
 		fmt.Println("Ooopss looks like there was a problem")
@@ -22,21 +24,21 @@ func main() {
 		os.Exit(2)
 	}
 
-	fmt.Println(pefile.Filename)
+	//fmt.Println(pefile.Filename)
 
 	for _, e := range pefile.Errors {
 		fmt.Println("Parser warning:", e)
 	}
 
-	fmt.Println(pefile.DosHeader.String())
-	fmt.Println(pefile.NTHeader.String())
-	fmt.Println(pefile.COFFFileHeader.String())
-	fmt.Println(pefile.OptionalHeader)
+	//fmt.Println(pefile.DosHeader.String())
+	//fmt.Println(pefile.NTHeader.String())
+	//fmt.Println(pefile.COFFFileHeader.String())
+	//fmt.Println(pefile.OptionalHeader)
 
-	for key, val := range pefile.OptionalHeader.DataDirs {
-		fmt.Println(key)
-		fmt.Println(val)
-	}
+	//for key, val := range pefile.OptionalHeader.DataDirs {
+	//	fmt.Println(key)
+	//	fmt.Println(val)
+	//}
 
 	for _, s := range pefile.Sections {
 		fmt.Println(s.String())
@@ -62,11 +64,13 @@ func main() {
 					funcname = string(imp.Name)
 				}
 				fmt.Println("\t", funcname)
+				fmt.Printf("%x %x %x\n", imp.Hint, imp.ThunkRva, imp.ThunkOffset)
 			}
 		}
 	} else {
 		for _, entry := range pefile.ImportDescriptors {
 			fmt.Println(string(entry.Dll))
+			fmt.Println(entry.String())
 			for _, imp := range entry.Imports {
 				var funcname string
 				if len(imp.Name) == 0 {
@@ -75,6 +79,7 @@ func main() {
 					funcname = string(imp.Name)
 				}
 				fmt.Println("\t", funcname)
+				fmt.Printf("%x %x %x\n", imp.Hint, imp.ThunkRva, imp.ThunkOffset)
 			}
 		}
 	}
@@ -83,7 +88,8 @@ func main() {
 		fmt.Println("\nDIRECTORY_ENTRY_EXPORT\n")
 		fmt.Println(pefile.ExportDirectory)
 		for _, entry := range pefile.ExportDirectory.Exports {
-			fmt.Printf("%d: %s:0x%x, forward: %s\n", entry.Ordinal, string(entry.Name), entry.Address, entry.Forwarder)
+			fmt.Printf("%d: %s:0x%x, forward: %s", entry.Ordinal, string(entry.Name), entry.Address, entry.Forwarder)
+			fmt.Println(entry.String())
 		}
 	}
 
