@@ -334,8 +334,8 @@ func (id ImportData) String() string {
 
 // ImportData64 64-bit version wrapper
 type ImportData64 struct {
-	StructTable      *ThunkData64
-	StructIat        *ThunkData64
+	StructTable      ThunkData64
+	StructIat        ThunkData64
 	ImportByOrdinal  bool
 	Ordinal          uint64
 	OrdinalOffset    uint64
@@ -706,11 +706,11 @@ type ThunkData64 struct {
 	Size       uint32
 }
 
-func newThunkData64(fileOffset uint32) (header *ThunkData64) {
-	header = new(ThunkData64)
+func newThunkData64(fileOffset uint32) (header ThunkData64) {
+	//header = new(ThunkData64)
 	header.Size = uint32(binary.Size(header.Data))
 	header.FileOffset = fileOffset
-	return header
+	return
 }
 
 func (t *ThunkData64) String() string {

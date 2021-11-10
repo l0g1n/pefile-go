@@ -2,19 +2,20 @@ package main
 
 import (
 	"fmt"
+	"github.com/l0g1n/pefile-go"
 	"os"
-
-	"github.com/awsaba/pefile-go"
 )
 
 func main() {
 	fmt.Println("hello everyone, lets parse your PEFile")
-	args := os.Args[1:]
-	if len(args) == 0 {
-		fmt.Println("Must specify the filename of the PEFile")
-		os.Exit(-1)
-	}
-	pefile, err := pefile.NewPEFile(args[0])
+	//args:= os.Args[1:]
+	//if len(args) == 0 {
+	//	fmt.Println("Must specify the filename of the PEFile")
+	//	os.Exit(-1)
+	//}
+	//filename := args[0]
+	filename := "D:\\H\\mae2.0_module\\bugs\\aaaa.exe"
+	pefile, err := pefile.NewPEFile(filename)
 	if err != nil {
 		fmt.Println("Ooopss looks like there was a problem")
 		fmt.Println(err)
@@ -49,16 +50,32 @@ func main() {
 	}*/
 
 	fmt.Println("\nDIRECTORY_ENTRY_IMPORT\n")
-	for _, entry := range pefile.ImportDescriptors {
-		fmt.Println(string(entry.Dll))
-		for _, imp := range entry.Imports {
-			var funcname string
-			if len(imp.Name) == 0 {
-				funcname = fmt.Sprintf("ordinal+%d", imp.Ordinal)
-			} else {
-				funcname = string(imp.Name)
+	if pefile.OptionalHeader64 != nil {
+		//64位程序
+		for _, entry := range pefile.ImportDescriptors {
+			fmt.Println(string(entry.Dll))
+			for _, imp := range entry.Imports64 {
+				var funcname string
+				if len(imp.Name) == 0 {
+					funcname = fmt.Sprintf("ordinal+%d", imp.Ordinal)
+				} else {
+					funcname = string(imp.Name)
+				}
+				fmt.Println("\t", funcname)
 			}
-			fmt.Println("\t", funcname)
+		}
+	} else {
+		for _, entry := range pefile.ImportDescriptors {
+			fmt.Println(string(entry.Dll))
+			for _, imp := range entry.Imports {
+				var funcname string
+				if len(imp.Name) == 0 {
+					funcname = fmt.Sprintf("ordinal+%d", imp.Ordinal)
+				} else {
+					funcname = string(imp.Name)
+				}
+				fmt.Println("\t", funcname)
+			}
 		}
 	}
 
