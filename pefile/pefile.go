@@ -14,9 +14,9 @@ func main() {
 	//	os.Exit(-1)
 	//}
 	//filename := args[0]
-	//filename := "D:\\H\\mae2.0_module\\测试程序\\calc32.exe"
+	filename := "D:\\H\\mae2.0_module\\测试程序\\calc32.exe"
 	//filename := "D:\\H\\mae2.0_module\\bugs\\actxprxy.dll"
-	filename := "D:\\H\\mae2.0_module\\bugs\\zipfldr.dll"
+	//filename := "D:\\H\\mae2.0_module\\bugs\\zipfldr.dll"
 	pefile, err := pefile.NewPEFile(filename)
 	if err != nil {
 		fmt.Println("Ooopss looks like there was a problem")
@@ -51,46 +51,47 @@ func main() {
 		}
 	}*/
 
-	fmt.Println("\nDIRECTORY_ENTRY_IMPORT\n")
-	if pefile.OptionalHeader64 != nil {
-		//64位程序
-		for _, entry := range pefile.ImportDescriptors {
-			fmt.Println(string(entry.Dll))
-			for _, imp := range entry.Imports64 {
-				var funcname string
-				if len(imp.Name) == 0 {
-					funcname = fmt.Sprintf("ordinal+%d", imp.Ordinal)
-				} else {
-					funcname = string(imp.Name)
-				}
-				fmt.Println("\t", funcname)
-				fmt.Printf("%x %x %x\n", imp.Hint, imp.ThunkRva, imp.ThunkOffset)
-			}
-		}
-	} else {
-		for _, entry := range pefile.ImportDescriptors {
-			fmt.Println(string(entry.Dll))
-			fmt.Println(entry.String())
-			for _, imp := range entry.Imports {
-				var funcname string
-				if len(imp.Name) == 0 {
-					funcname = fmt.Sprintf("ordinal+%d", imp.Ordinal)
-				} else {
-					funcname = string(imp.Name)
-				}
-				fmt.Println("\t", funcname)
-				fmt.Printf("%x %x %x\n", imp.Hint, imp.ThunkRva, imp.ThunkOffset)
-			}
-		}
-	}
+	//fmt.Println("\nDIRECTORY_ENTRY_IMPORT\n")
+	//if pefile.OptionalHeader64 != nil {
+	//	//64位程序
+	//	for _, entry := range pefile.ImportDescriptors {
+	//		fmt.Println(string(entry.Dll))
+	//		for _, imp := range entry.Imports64 {
+	//			var funcname string
+	//			if len(imp.Name) == 0 {
+	//				funcname = fmt.Sprintf("ordinal+%d", imp.Ordinal)
+	//			} else {
+	//				funcname = string(imp.Name)
+	//			}
+	//			fmt.Println("\t", funcname)
+	//			fmt.Printf("%x %x %x\n", imp.Hint, imp.ThunkRva, imp.ThunkOffset)
+	//		}
+	//	}
+	//} else {
+	//	//32位程序
+	//	for _, entry := range pefile.ImportDescriptors {
+	//		fmt.Println(string(entry.Dll))
+	//		fmt.Println(entry.String())
+	//		for _, imp := range entry.Imports {
+	//			var funcname string
+	//			if len(imp.Name) == 0 {
+	//				funcname = fmt.Sprintf("ordinal+%d", imp.Ordinal)
+	//			} else {
+	//				funcname = string(imp.Name)
+	//			}
+	//			fmt.Println("\t", funcname)
+	//			fmt.Printf("%x %x %x\n", imp.Hint, imp.ThunkRva, imp.ThunkOffset)
+	//		}
+	//	}
+	//}
 
-	if pefile.ExportDirectory != nil {
-		fmt.Println("\nDIRECTORY_ENTRY_EXPORT\n")
-		fmt.Println(pefile.ExportDirectory)
-		for _, entry := range pefile.ExportDirectory.Exports {
-			fmt.Printf("%d: %s:0x%x, forward: %s", entry.Ordinal, string(entry.Name), entry.Address, entry.Forwarder)
-			fmt.Println(entry.String())
-		}
-	}
+	//if pefile.ExportDirectory != nil {
+	//	fmt.Println("\nDIRECTORY_ENTRY_EXPORT\n")
+	//	fmt.Println(pefile.ExportDirectory)
+	//	for _, entry := range pefile.ExportDirectory.Exports {
+	//		fmt.Printf("Ordinal：%d: %s:0x%x, forward: %s", entry.Ordinal, string(entry.Name), entry.Address, entry.Forwarder)
+	//		fmt.Println(entry.String())
+	//	}
+	//}
 
 }

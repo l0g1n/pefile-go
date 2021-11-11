@@ -491,6 +491,23 @@ type ResourceDirectoryEntryD struct {
 	OffsetToData uint32
 }
 
+type ResourceDataDirectoryD struct {
+	VirtualAddress uint32
+	Size           uint32
+}
+type ResourceDataDirectory struct {
+	Data       ResourceDataDirectoryD
+	FileOffset uint32
+	Size       uint32
+}
+
+func newResourceDataDirectory(fileOffset uint32) (header *ResourceDataDirectory) {
+	header = new(ResourceDataDirectory)
+	header.Size = uint32(binary.Size(header.Data))
+	header.FileOffset = fileOffset
+	return header
+}
+
 // ResourceDataEntry wrapper
 type ResourceDataEntry struct {
 	Data       ResourceDataEntryD

@@ -243,9 +243,9 @@ func (pe *PEFile) parseDataDirectories() error {
 	var dataDirs map[string]DataDirectory
 
 	funcMap := map[string]interface{}{
-		"IMAGE_DIRECTORY_ENTRY_IMPORT": pe.parseImportDirectory,
-		"IMAGE_DIRECTORY_ENTRY_EXPORT": pe.parseExportDirectory,
-		//"IMAGE_DIRECTORY_ENTRY_RESOURCE": pe.parse_resources_directory,
+		"IMAGE_DIRECTORY_ENTRY_IMPORT":   pe.parseImportDirectory,
+		"IMAGE_DIRECTORY_ENTRY_EXPORT":   pe.parseExportDirectory,
+		"IMAGE_DIRECTORY_ENTRY_RESOURCE": pe.parseResourcesDirectory,
 
 		// TODO at a later time
 		//"IMAGE_DIRECTORY_ENTRY_DEBUG": pe.parseDebugDirectory,
