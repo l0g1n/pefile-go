@@ -195,8 +195,7 @@ type OptionalHeader64D struct {
 	SizeOfUninitializedData     uint32
 	AddressOfEntryPoint         uint32
 	BaseOfCode                  uint32
-	BaseOfData                  uint32
-	ImageBase                   uint32
+	ImageBase                   uint64
 	SectionAlignment            uint32
 	FileAlignment               uint32
 	MajorOperatingSystemVersion uint16
@@ -1038,7 +1037,7 @@ func sectionString(fileOffset uint32, sectionName string, iface interface{}) str
 		kind := vField.Kind()
 
 		fieldOffset := uint64(fileOffset) + uint64(sField.Offset)
-		if kind == reflect.Uint8 || kind == reflect.Uint16 || kind == reflect.Uint32 {
+		if kind == reflect.Uint8 || kind == reflect.Uint16 || kind == reflect.Uint32 || kind == reflect.Uint64 {
 			values += fmt.Sprintf("0x%-4X\t\t0x%-4X\t%-24s\t0x%X"+
 				"\n", fieldOffset, sField.Offset, sField.Name, vField.Interface())
 		}
