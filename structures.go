@@ -267,7 +267,7 @@ func (sh *SectionHeader) String() string {
 // SectionHeaderD raw data field read from the file
 type SectionHeaderD struct {
 	Name                 [8]uint8
-	Misc                 uint32
+	VirtualSize          uint32
 	VirtualAddress       uint32
 	SizeOfRawData        uint32
 	PointerToRawData     uint32

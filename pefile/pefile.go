@@ -31,16 +31,16 @@ func main() {
 	//fmt.Println(pefile.DosHeader.String())
 	//fmt.Println(pefile.NTHeader.String())
 	//fmt.Println(pefile.COFFFileHeader.String())
-	fmt.Println(pefile.OptionalHeader64.String())
+	//fmt.Println(pefile.OptionalHeader64.String())
 
 	//for key, val := range pefile.OptionalHeader.DataDirs {
 	//	fmt.Println(key)
 	//	fmt.Println(val)
 	//}
 	//
-	//for _, s := range pefile.Sections {
-	//	fmt.Println(s.Data)
-	//}
+	for _, s := range pefile.Sections {
+		fmt.Println(s.String())
+	}
 
 	//for _, val := range pefile.ImportDescriptors {
 	//	fmt.Println(val)
