@@ -283,9 +283,9 @@ func (pe *PEFile) getSectionByRva(rva uint32) *SectionHeader {
 		var size uint32
 		adjustedPointer := pe.adjustFileAlignment(section.Data.PointerToRawData)
 		if pe.dataLen-adjustedPointer < section.Data.SizeOfRawData {
-			size = section.Data.Misc
+			size = section.Data.VirtualSize
 		} else {
-			size = max(section.Data.SizeOfRawData, section.Data.Misc)
+			size = max(section.Data.SizeOfRawData, section.Data.VirtualSize)
 		}
 		vaddr := pe.adjustSectionAlignment(section.Data.VirtualAddress)
 
