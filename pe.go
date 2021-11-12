@@ -23,6 +23,7 @@ type PEFile struct {
 	Sections          []SectionHeader
 	ImportDescriptors []ImportDescriptor
 	ExportDirectory   *ExportDirectory
+	Resources         map[string]interface{}
 	Errors            []error
 	// Private Fields
 	data mmap.MMap
