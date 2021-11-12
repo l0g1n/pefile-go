@@ -40,7 +40,7 @@ func (pe *PEFile) parseResources64(resourceHeader, fileOffset uint32, retMap map
 		nameOffset := uint32((uint64(dirEntry.Data.Name) & 0x7fffffff) >> 0x0)
 		var name string
 		if isNameString {
-			//字符串名称
+			//字符串类型名称
 			startPos := resourceHeader + nameOffset
 			lenbuff := bytes.NewBuffer(pe.data[startPos : startPos+2])
 			var strLen uint16
@@ -55,7 +55,7 @@ func (pe *PEFile) parseResources64(resourceHeader, fileOffset uint32, retMap map
 			name = string(ascii)
 			//fmt.Println(string(ascii))
 		} else {
-			//序号名称
+			//序号类型名称
 			name = fmt.Sprint(nameOffset)
 			//第一层
 			if bFirst {
@@ -105,7 +105,7 @@ func (pe *PEFile) parseResources64(resourceHeader, fileOffset uint32, retMap map
 				}
 			}
 			//fmt.Printf("%d --> %d\n", entryNum, dirEntry.Data.Name)
-			fmt.Println(name)
+			//fmt.Println(name)
 		}
 		//解析数据
 		dataEntry := newResourceDataEntry(fileOffset)
