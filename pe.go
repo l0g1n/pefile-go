@@ -31,6 +31,14 @@ type PEFile struct {
 	headerEnd uint32
 }
 
+func (pe *PEFile) GetOepData(iface interface{}) error {
+	if pe.OptionalHeader64 != nil {
+		return pe.readRVA(iface, pe.OptionalHeader64.Data.AddressOfEntryPoint)
+	} else {
+		return pe.readRVA(iface, pe.OptionalHeader.Data.AddressOfEntryPoint)
+	}
+}
+
 // NewPEFile attempt to parse a PE file from a file on disk, using mmap
 func NewPEFile(filename string) (pe *PEFile, err error) {
 	pe = new(PEFile)

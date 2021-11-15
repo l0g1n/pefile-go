@@ -96,4 +96,8 @@ func main() {
 	if err != nil {
 	}
 	fmt.Println(string(reJson))
+
+	oepData := make([]byte, 10, 10)
+	pefile.GetOepData(oepData)
+	fmt.Println(oepData)
 }
